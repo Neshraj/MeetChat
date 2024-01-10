@@ -1,0 +1,56 @@
+.createbox{
+    border: 2px solid #000 ;
+    width: 95%;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    height: auto;
+    margin: auto;
+    background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.777) ,rgba(82, 82, 82, 0.777) );
+    border-radius: 50px;
+    box-shadow: 2px 2px 10px 1px rgb(89, 78, 31);
+    border: 0px;
+    padding: 20px;
+    margin-top: 90px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mainlabels{
+    background-image: linear-gradient(to bottom right, rgba(104, 220, 207, 0.791) , rgba(255, 193, 92, 0.824));
+    text-align: start;
+    margin: 10px 0px;
+    width: 130px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    text-shadow: 1px 1px 2px #ffffffbd;
+    box-shadow: 1px 1px 4px 2px #000000a9;
+    border: 0px;
+}
+
+.mainInputs{
+    outline: 0px;
+    border: 0px;
+    height: 30px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 4px 2px #000000a9;
+   background-color: rgba(192, 188, 188, 0.767);
+}
+
+#createButton{
+    margin-top: 10px !important;
+    margin:auto;
+    text-shadow: 1px 1px 2px #ffffffbd;
+    box-shadow: 1px 1px 4px 2px #000000a9;
+    height: 45px;
+    font-size: 25px;
+    display: block;
+}
+
+
+#chome{
+    width:50px ;
+    font-weight: lighter;
+}

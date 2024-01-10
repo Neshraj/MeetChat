@@ -1,0 +1,111 @@
+*{
+    box-sizing: border-box;
+    border: 0px;
+}
+
+a{
+    text-decoration: none;
+}
+
+body{
+    background: linear-gradient(to bottom, rgba(104, 220, 207, 0.791) , rgba(255, 193, 92, 0.824));
+    background-position: center;
+    height: 100vh;
+}
+
+input{
+    font-weight: bolder;
+    outline: 0px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+#messageInput{
+    width: 250px;
+    height: 35px;
+    margin-left: 25px;
+}
+
+#sendButton{
+    height: 35px;
+    width: 65px;
+    font-weight: bolder;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#messageInput,#sendButton{
+    border-radius: 10px;
+    margin-bottom: 2px;
+    text-shadow: 1px 1px 2px #0000007e;
+    box-shadow: 1px 1px 2px 1px #00000059;
+}
+
+#sendbox{
+    position: fixed !important;
+    bottom: 0 !important;
+}
+
+#chathome{
+    width:50px ;
+    font-weight: lighter;
+    position: fixed;
+    top: 0;
+}
+
+
+#messages{
+    border: 0px solid #000;
+    border-radius: 15px;
+    margin-top: 40px;
+    position: fixed;
+    width: 360px;
+    height: 85%;
+    overflow: scroll;
+    box-shadow: 1px 1px 2px 1px #00000059;
+}
+
+#messages p{
+    margin: 5px 2px;
+    width: auto;
+    display: inline-block;
+    font-weight: bolder;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#myUsername{
+    
+  background-color: rgb(233, 233, 149);
+    margin-right: 1px;
+    text-align: center;
+    padding: 2px;
+    font-weight: lighter !important;
+    border-radius: 8px;
+    text-shadow: 1px 1px 2px #0000007e;
+    box-shadow: 1px 1px 2px 1px #00000059;
+    color: #646363;
+
+    overflow: hidden;
+}
+
+#mymeesage{
+    background-color: rgb(162, 194, 216);
+    margin-right: 1px;
+    text-align: center;
+    padding: 2px;
+    font-weight: bolder !important;
+    border-radius: 3px;
+    text-shadow: 1px 1px 2px #00000049;
+    box-shadow: 1px 1px 2px 1px #00000059;
+    color: #383333;
+    max-width: 350px;
+
+    /*margin: 0;
+    padding: 5px; /* Optional: Add padding for better visual appearance */
+    height: auto !important; /* Set the desired height for the <p> element */
+    /*overflow: hidden;  Hide any overflowing content */
+}
+
+#mymeesage:last-child{
+    background-color: red;
+}
+

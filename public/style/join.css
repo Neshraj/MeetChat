@@ -1,0 +1,16 @@
+#joinButton{
+    margin-top: 10px !important;
+    margin:auto;
+    text-shadow: 1px 1px 2px #ffffffbd;
+    box-shadow: 1px 1px 4px 2px #000000a9;
+    height: 45px;
+    font-size: 25px;
+    width: 100px;
+    border-radius: 10px;
+    background-image: linear-gradient(to bottom right, rgba(104, 220, 207, 0.791) , rgba(255, 193, 92, 0.824));
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    border: 0px;
+    display: block;
+    outline: 0px;
+}

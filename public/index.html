@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeetChat</title>
+    <link rel="icon" href="./assets/meetback-removebg-preview.png">
+    <link rel="stylesheet" type="text/css" href="./style/common.css">
+    <link rel="stylesheet" type="text/css" href="./style/home.css">
+    <link rel="stylesheet" type="text/css" href="./style/create.css">
+    <link rel="stylesheet" type="text/css" href="./style/join.css">
+    <link rel="stylesheet" type="text/css" href="./style/chat.css">
+
+
+</head>
+<body>
+
+    <!--Home page-->
+    
+    <div id="home" style="display: block;">
+        <header>
+            <div id="head">
+                <h1>MeetChat</h1>
+            </div>
+        </header>
+        <div id="main">
+        <div id="buttondiv">
+            <button class="mainButton" id="go" onclick="createpage()">Create Chat</button>
+            <button class="mainButton" onclick="joinpage()">Join Chat</button>
+            </div>
+            <div id="about">
+                <p>Users can easily create chat rooms with just a unique room name and password. No need for phone numbers or personal information, ensuring privacy. Quick and seamless joining process for friends or groups to connect in real-time. Minimal barriers for entry, making it easy for anyone to use. Password protection ensures that only invited individuals can join a particular chat room. End-to-end encryption for secure conversations.</p>
+            </div>
+        </div>      
+    </div>
+
+
+
+    <!--Create page-->
+    <div id="createpage" style="display: none;">
+    <header>
+        <div id="head">
+            <h1>Create Room</h1>
+        </div>
+    </header>
+
+    <div class='createbox'>
+        <button class="mainButton" id="chome" onclick="homepage()">Home</button>
+        <label for="crommclass" class='mainlabels'>Room Name</label>
+        <input type="text" class='mainInputs' id='crommclass' placeholder="Room Name" onchange="checkc()">
+
+        <label for="cpassword" class='mainlabels'>Password</label>
+        <input type="password" id="cpassword" class='mainInputs' onchange="checkc()" placeholder="Password"/>
+
+         <label for="climit" class='mainlabels'>User Limit</label>
+         <input type="number" id="climit" class='mainInputs' onchange="checkc()" placeholder="Min Limit Should Be 2"/>
+
+         <button class='mainButton' id='createButton' onclick="createRoom()" onchange="checkc()" disabled>Create</button>
+    </div>
+    </div>
+
+
+
+    <!--Join page-->
+
+    <div id="joinpage" style="display: none;">
+
+    <header>
+        <div id="head">
+            <h1>Join Room</h1>
+        </div>
+    </header>
+
+    <div class='createbox'>
+        <button class="mainButton" id="chome" onclick="homepage()">Home</button>
+        <label for="rommname" class='mainlabels'>Room Name</label>
+        <input type="text" class='mainInputs' id='rommname' placeholder="Room Name" onchange="checkcj()"/>
+
+        <label for="password" class='mainlabels'>Password</label>
+        <input type="password" id="password" class='mainInputs' placeholder="Password" onchange="checkcj()"/>
+
+
+        <button class='mainButton' id='joinButton' onclick="joinRoom()" onchange="checkcj()" disabled>Join</button>
+    </div>
+</div>
+
+
+    <!--Chat page-->
+
+    <div id="chatInterface" style="display: none;">
+        <button class="mainButton" id="chathome" onclick="homepage()">Home</button>
+        <div id="messages">
+        </div>
+        <div id="sendbox">
+        <input type="text" id="messageInput" placeholder="Type your message...">
+        <button id="sendButton" onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+  <script>
+    const socket = io();
+    let currentRoom = '';
+
+    function checkc(){
+
+        if(document.getElementById('crommclass').value.length>0 && document.getElementById('cpassword').value.length>0 && document.getElementById('climit').value>1){
+                document.getElementById('createButton').disabled=false;
+                if(document.getElementById('climit').value<2){
+                    alert("The Minimum User Limit Should Be 2");
+                }
+            }
+        
+        else{
+            document.getElementById('createButton').disabled=true;
+        }
+    }
+
+    function checkcj(){
+        if(document.getElementById('rommname').value.length>0 && document.getElementById('password').value.length>0){
+            document.getElementById('joinButton').disabled=false;
+        }
+
+        else{
+            document.getElementById('joinButton').disabled=true;
+        }
+    }
+
+
+    //pages
+
+    function homepage(){
+        document.getElementById('home').style.display='block';
+        document.getElementById('createpage').style.display='none';
+        document.getElementById('joinpage').style.display='none';
+        document.getElementById('chatInterface').style.display='none';
+        location.reload();
+    }
+
+    function createpage(){
+        document.getElementById('home').style.display='none';
+        document.getElementById('createpage').style.display='block';
+        document.getElementById('joinpage').style.display='none';
+        document.getElementById('chatInterface').style.display='none';
+
+    }
+
+
+    function joinpage(){
+        document.getElementById('home').style.display='none';
+        document.getElementById('createpage').style.display='none';
+        document.getElementById('joinpage').style.display='block';
+        document.getElementById('chatInterface').style.display='none';
+    }
+
+
+    function createRoom() {
+    document.getElementById('home').style.display='none';
+    document.getElementById('createpage').style.display='none';
+    document.getElementById('joinpage').style.display='none';
+    document.getElementById('chatInterface').style.display='block';
+
+
+    //server functions
+
+
+    const roomName = document.getElementById('crommclass').value;
+    const roomPassword = document.getElementById('cpassword').value;
+    const userLimit = parseInt(document.getElementById('climit').value);
+    const userName = prompt('Enter your name:'); // Ask user for their name
+    if(userName===null){
+        alert("Enter The Name");
+        location.reload();
+    }
+
+    if(userName.length<2){
+        alert("User Name Must Be Greater Then 2 Letters");
+        location.reload();
+    }
+
+    socket.emit('createRoom', { roomName, password: roomPassword, userLimit, userName });
+
+    currentRoom = roomName;
+    // showChatInterface();  // Do not show the chat interface here
+  }
+
+  function joinRoom() {
+
+    document.getElementById('home').style.display='none';
+    document.getElementById('createpage').style.display='none';
+    document.getElementById('joinpage').style.display='none';
+    document.getElementById('chatInterface').style.display='block';
+
+
+
+    const roomName = document.getElementById('rommname').value;
+    const roomPassword = document.getElementById('password').value;
+    const userName = prompt('Enter your name:'); // Ask user for their name
+
+    if(userName===null){
+        alert("Enter The Name");
+        location.reload();
+    }
+
+    if(userName.length<2){
+        alert("User Name Must Be Greater Then 2 Letters");
+        location.reload();
+    }
+
+    socket.emit('joinRoom', { roomName, password: roomPassword, userName });
+    currentRoom = roomName;
+    // showChatInterface();  // Do not show the chat interface here
+  }
+
+    function sendMessage() {
+      const message = document.getElementById('messageInput').value;
+      if(message){
+        socket.emit('sendMessage', { roomName: currentRoom, message});
+      }
+      document.getElementById('messageInput').value="";
+
+    }
+
+    socket.on('receiveMessage', (data) => {
+        //console.log(data);
+      const messagesDiv = document.getElementById('messages');
+      const username = document.createElement('p');
+      username.id = 'myUsername';
+      const messageElement = document.createElement('p');
+      messageElement.id='mymeesage';
+      const br = document.createElement('br');
+      username.innerText=`${data.sender['name']}`;
+      messageElement.innerText = `${data.message}`;
+      //console.log("name : ",data.sender.name);
+      messagesDiv.appendChild(username);
+      messagesDiv.appendChild(messageElement);
+      messagesDiv.appendChild(br);
+      //console.log(messageElement);
+    });
+
+    socket.on('roomFull', () => {
+      alert('Room is full. Cannot join the room.');
+      location.reload(); // Refresh the page
+    });
+
+    socket.on('roomCreated', (roomName) => {
+      showChatInterface();
+      console.log(`Room created: ${roomName}`);
+    });
+
+    socket.on('invalidRoom', () => {
+    alert('Invalid room or password. Please try again.');
+    location.reload(); // Refresh the page
+  });
+
+  socket.on('roomExists',() => {
+      alert('Room already exists. Please choose a different room name.');
+      location.reload(); // Refresh the page
+    });
+
+    socket.on('roomJoined', (data) => {
+    showChatInterface();
+    console.log(`${data.userName} joined room: ${data.roomName}`);
+    alert('join');
+  });
+
+  socket.on('userJoined', (data) => {
+    const userjoined = new Audio('./assets/recieveaudio.mp3');
+    userjoined.play();
+    // Handle user joined notification (if needed)
+    console.log(`${data.userName} joined the room`);
+    //document.getElementById('jactive').innerText=data.userName+""+" online";
+
+    alert('User Jioned');
+  });
+
+  socket.on('userDisconnected', (userName) => {
+    // Handle user disconnected notification (if needed)
+    console.log(`User disconnected: ${userName}`);
+  });
+
+  
+
+  </script>
+</body>
+</html>
+
+
+
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Application</title>
+</head>
+<body>
+  <div id="roomCreation">
+    <h2>Create Room</h2>
+    <input type="text" id="createRoomName" placeholder="Room Name">
+    <input type="password" id="createRoomPassword" placeholder="Room Password">
+    <input type="number" id="userLimit" placeholder="User Limit">
+    <button onclick="createRoom()">Crete Room</button>
+  </div>
+
+  <div id="roomJoin">
+    <h2>Join Room</h2>
+    <input type="text" id="joinRoomName" placeholder="Room Name">
+    <input type="password" id="joinRoomPassword" placeholder="Room Password">
+    <button onclick="joinRoom()">Join Room</button>
+  </div>
+
+  <div id="chatInterface" style="display: none;">
+    <h3 id="cactive"></h3>
+    <h3 id="jactive"></h3>
+    <div id="messages"></div>
+    <input type="text" id="messageInput" placeholder="Type your message...">
+    <button onclick="sendMessage()">Send</button>
+  </div>-->
