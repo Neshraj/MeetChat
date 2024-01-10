@@ -54,3 +54,12 @@
     margin-top: 5px;
     text-shadow: 1px 1px 2px #0000007e;
 }
+
+@media only screen and (min-width: 600px) {
+    #main{
+      width: 500px;
+      height: 300px;
+    }
+  }
+
+
