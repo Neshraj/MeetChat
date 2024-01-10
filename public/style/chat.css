@@ -60,7 +60,7 @@ input{
     position: fixed;
     width: 360px;
     height: 85%;
-    overflow: scroll;
+    overflow: auto;
     box-shadow: 1px 1px 2px 1px #00000059;
 }
 
@@ -105,7 +105,22 @@ input{
     /*overflow: hidden;  Hide any overflowing content */
 }
 
-#mymeesage:last-child{
-    background-color: red;
-}
+@media only screen and (min-width: 600px) {
 
+    body{
+        display: flex;
+        justify-content: center;
+    }
+
+    #messages{
+        overflow: auto;
+    }
+
+    #chatInterface{
+        margin-right: 25%;
+    }
+        
+        
+
+
+  }
