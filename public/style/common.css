@@ -18,3 +18,9 @@ input{
     font-weight: bolder;
     font-family: 'Courier New', Courier, monospace;
 }
+
+@media only screen and (min-width: 500px) {
+    body{
+        background-position: bottom !important;
+    }
+  }

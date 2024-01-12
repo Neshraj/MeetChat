@@ -93,7 +93,7 @@
 
         </div>
         <div id="sendbox">
-        <input type="text" id="messageInput" placeholder="Type your message...">
+        <input type="text" id="messageInput" placeholder="Type your message..." autofocus>
         <button id="sendButton" onclick="sendMessage()">Send</button>
         </div>
       </div>
@@ -117,7 +117,7 @@
 
     function checkc(){
 
-        if(document.getElementById('crommclass').value.length>0 && document.getElementById('cpassword').value.length>0 && document.getElementById('climit').value>1){
+        if(document.getElementById('crommclass').value.trim().length>0 && document.getElementById('cpassword').value.trim().length>0 && document.getElementById('climit').value>1){
                 document.getElementById('createButton').disabled=false;
                 if(document.getElementById('climit').value<2){
                     alert("The Minimum User Limit Should Be 2");
@@ -130,7 +130,7 @@
     }
 
     function checkcj(){
-        if(document.getElementById('rommname').value.length>0 && document.getElementById('password').value.length>0){
+        if(document.getElementById('rommname').value.trim().length>0 && document.getElementById('password').value.trim().length>0){
             document.getElementById('joinButton').disabled=false;
         }
 
@@ -177,10 +177,10 @@
     //server functions
 
 
-    const roomName = document.getElementById('crommclass').value;
-    const roomPassword = document.getElementById('cpassword').value;
+    const roomName = document.getElementById('crommclass').value.trim();
+    const roomPassword = document.getElementById('cpassword').value.trim();
     const userLimit = parseInt(document.getElementById('climit').value);
-    const userName = prompt('Enter your name:'); // Ask user for their name
+    const userName = prompt('Enter your name:').trim(); // Ask user for their name
     if(userName===null){
         alert("Enter The Name");
         location.reload();
@@ -206,9 +206,9 @@
 
 
 
-    const roomName = document.getElementById('rommname').value;
-    const roomPassword = document.getElementById('password').value;
-    const userName = prompt('Enter your name:'); // Ask user for their name
+    const roomName = document.getElementById('rommname').value.trim();
+    const roomPassword = document.getElementById('password').value.trim();
+    const userName = prompt('Enter your name:').trim(); // Ask user for their name
 
     if(userName===null){
         alert("Enter The Name");
@@ -226,7 +226,7 @@
   }
 
     function sendMessage() {
-      const message = document.getElementById('messageInput').value;
+      const message = document.getElementById('messageInput').value.trim();
       if(message){
         socket.emit('sendMessage', { roomName: currentRoom, message});
       }
