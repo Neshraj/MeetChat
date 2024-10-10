@@ -19,6 +19,10 @@ input{
     font-family: 'Courier New', Courier, monospace;
 }
 
+button{
+    cursor: pointer;
+}
+
 @media only screen and (min-width: 500px) {
     body{
         background-position: bottom !important;

@@ -55,6 +55,10 @@
     font-weight: lighter;
 }
 
+button{
+    cursor: pointer;
+}
+
 
 @media only screen and (min-width: 600px) {
     .createbox{

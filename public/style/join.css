@@ -14,3 +14,7 @@
     display: block;
     outline: 0px;
 }
+
+button{
+    cursor: pointer;
+}
